@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список покупок общесемейный</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #2c3e50;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            width: 250px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:focus {
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Добавьте товары для всей семьи</h1>
+    <input type="text" id="itemInput" placeholder="Введите товар">
+    <button onclick="addItem()">Добавить товар</button>
+    <button onclick=window.location.href="{% url 'Home' %}">Назад</button>
+
+    <script>
+        function addItem() {
+            const itemInput = document.getElementById('itemInput');
+            const item = itemInput.value;
+            if (item) {
+                // Создаём запись в формате "название_товара -семья"
+                const formattedItem = `${item} - Семья`;
+                // Добавляем товар в localStorage
+                const items = JSON.parse(localStorage.getItem('cart')) || [];
+                items.push(formattedItem); // Используем отформатированное название товара
+                localStorage.setItem('cart', JSON.stringify(items));
+                itemInput.value = ''; // Очистить поле ввода
+                // Обновляем корзину на главной странице
+                updateCart();
+            }
+        }
+
+        function updateCart() {
+            const items = JSON.parse(localStorage.getItem('cart')) || [];
+            // Отправляем событие в localStorage для обновления корзины
+            localStorage.setItem('cart', JSON.stringify(items));
+        }
+    </script>
+</body>
+</html>

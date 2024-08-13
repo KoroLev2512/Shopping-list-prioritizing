@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосование за товары</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #0077cc;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        .item {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #0077cc;
+            border-radius: 5px;
+            background-color: #e7f3ff;
+        }
+        button {
+            background-color: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        #results {
+            background-color: #f0f8ff;
+            border-radius: 5px;
+            padding: 10px;
+            margin-top: 20px;
+        }
+        p {
+            margin: 5px 0;
+        }
+          button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #3498db;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: background-color 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Голосование за товары</h1>
+        <h1>Добро пожаловать, {{ name }}!</h1>
+        <div class="item">
+            <h2 id="item1">Товар 1: Ноутбук</h2>
+            <button onclick="vote('item1')">Голосовать за Товар 1</button>
+        </div>
+        <div class="item">
+            <h2 id="item2">Товар 2: Смартфон</h2>
+            <button onclick="vote('item2')">Голосовать за Товар 2</button>
+        </div>
+
+        <h2>Результаты голосования:</h2>
+        <div id="results">
+            <p id="resultItem1">Товар 1 (Ноутбук): 0 голосов</p>
+            <p id="resultItem2">Товар 2 (Смартфон): 0 голосов</p>
+        </div>
+    </div>
+
+    <script>
+        let votes = {
+            item1: 0,
+            item2: 0
+        };
+
+        function vote(itemId) {
+            if (itemId === 'item1') {
+                votes.item1++;
+                document.getElementById('resultItem1').innerText = `Товар 1 (Ноутбук): ${votes.item1} голосов`;
+            } else if (itemId === 'item2') {
+                votes.item2++;
+                document.getElementById('resultItem2').innerText = `Товар 2 (Смартфон): ${votes.item2} голосов`;
+            }
+        }
+    </script>
+<button onclick=window.location.href="{% url 'Home' %}">Назад</button>
+</body>
+</html>

@@ -1,0 +1,154 @@
+
+<!DOCTYPE html>
+<!-- Грузим папку статик -->
+{% load static %} 
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список покупок</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            color: #555;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        button {
+            background-color: #7700ff; 
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 15px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        button:hover {
+            background-color: #430fd3;
+            transform: scale(1.05);
+        }
+
+        .cart {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+        }
+
+        h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        li button {
+            background-color: #f44336;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        li button:hover {
+            background-color: #e53935;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static "css/style.css" %}" />
+</head>
+<body>
+    <h1>Выберите какой список покупок вы заполняете</h1>
+    <div style="display: flex; justify-content: center;">
+        <button onclick=window.location.href="{% url 'mother' %}">Мама</button>
+        <button onclick=window.location.href="{% url 'father' %}">Папа</button>
+        <button onclick=window.location.href="{% url 'son' %}">Сын</button>
+        <button onclick=window.location.href="{% url 'family' %}">Товары для семьи</button>
+
+    </div>
+     <h2>Голосование за покупки</h2>
+    <div style="display: flex; justify-content: center;">
+        <button onclick=window.location.href="{% url 'golos' name='Мама' %}">Мама</button>
+        <button onclick=window.location.href="{% url 'golos' name='Папа' %}">Папа</button>
+        <button onclick=window.location.href="{% url 'golos' name='Сын' %}">Сын</button>
+        
+
+    </div>
+    <h3>Вывести результат голосования</h3>
+    <div style="display: flex; justify-content: center;">
+        <button onclick=window.location.href="{% url 'Result' %}">Результат</button>
+
+
+    </div>
+    <div class="cart">
+        <h2>Общая корзина</h2>
+        <!-- Тест базы -->
+        <p>{{Base.0}}</p> 
+        <ul id="cartList"></ul>
+    </div>
+
+    <script>
+        const cartList = document.getElementById('cartList');
+
+        // Функция для отображения корзины
+        function updateCart() {
+            cartList.innerHTML = '';
+            const items = JSON.parse(localStorage.getItem('cart')) || [];
+            items.forEach((item, index) => {
+                const li = document.createElement('li');
+                li.textContent = item;
+
+                // Создаем кнопку для удаления товара
+                const deleteButton = document.createElement('button');
+                deleteButton.textContent = 'Удалить';
+                deleteButton.onclick = () => {
+                    removeItem(index);
+                };
+
+                li.appendChild(deleteButton);
+                cartList.appendChild(li);
+            });
+        }
+
+        // Функция для удаления товара
+        function removeItem(index) {
+            const items = JSON.parse(localStorage.getItem('cart')) || [];
+            items.splice(index, 1); // Удаляем элемент по индексу
+            localStorage.setItem('cart', JSON.stringify(items)); // Сохраняем обновленный массив
+            updateCart(); // Обновляем корзину
+        }
+
+        // Вызываем updateCart при загрузке страницы
+        updateCart();
+    </script>
+</body>
+</html>
