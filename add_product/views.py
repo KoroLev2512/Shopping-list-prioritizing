@@ -14,8 +14,9 @@ def index(request):
     return render(request, "index.html", context=data)
 
 
-def mother(request, name):
-    return render(request, "mama.html")
+def user(request, name):
+    data = {"name": name, "users": ['Мама', 'Папа', 'Сын']}
+    return render(request, "user.html", context=data)
     # product = request.GET.get("product", "") # Параметр строки запроса
     # # http://127.0.0.1:8000/products/mother?product=good
     # # http://127.0.0.1:8000/products/mother?product=sugar
@@ -27,25 +28,6 @@ def mother(request, name):
     #     """)
     # else:
     #     return HttpResponseRedirect("/") # Не забыть отключить кэш
-
-def father(request, name):
-    return render(request, "papa.html")
-    # return render(request, "index.html")
-    # product = request.GET.get("product", "") # Параметр строки запроса
-
-    # return HttpResponse(f"""father
-    # <p>Имя: {name}</p>
-    # """)
-
-def son(request, name):
-    return render(request, "son.html")
-    # product = request.GET.get("product", "") # Параметр строки запроса
-
-    # return HttpResponse(f"""son
-    # <p>Имя: {name}</p>
-    # """)
-def family(request, name):
-    return render(request, "family.html")
 
 def family2(request, path, name):
     return render(request, "family.html")

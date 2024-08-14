@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Список покупок - Папа </title>
+    <title>Список покупок - Мама </title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -56,7 +56,11 @@
     </style>
 </head>
 <body>
-    <h1>Добро пожаловать,Папа!</h1>
+    {% if name in users%}
+        <h1>Добро пожаловать, {{ name }}!</h1>
+    {% else %}
+        <h1>Товары для всей семьи!</h1>
+    {% endif %}
     <input type="text" id="itemInput" placeholder="Введите товар">
     <button onclick="addItem()">Добавить товар</button>
     <button onclick=window.location.href="{% url 'Home' %}">Назад</button>
@@ -66,8 +70,8 @@
             const itemInput = document.getElementById('itemInput');
             const item = itemInput.value;
             if (item) {
-                // Создаём запись в формате "название_товара - папа"
-                const formattedItem = `${item} - Папа`;
+                // Создаём запись в формате "название_товара - мама"
+                const formattedItem = `${item} - Мама`;
                 // Добавляем товар в localStorage
                 const items = JSON.parse(localStorage.getItem('cart')) || [];
                 items.push(formattedItem); // Используем отформатированное название товара

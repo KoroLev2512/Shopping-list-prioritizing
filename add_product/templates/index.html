@@ -89,10 +89,10 @@
 <body>
     <h1>Выберите какой список покупок вы заполняете</h1>
     <div style="display: flex; justify-content: center;">
-        <button onclick=window.location.href="{% url 'mother' %}">Мама</button>
-        <button onclick=window.location.href="{% url 'father' %}">Папа</button>
-        <button onclick=window.location.href="{% url 'son' %}">Сын</button>
-        <button onclick=window.location.href="{% url 'family' %}">Товары для семьи</button>
+        <button onclick=window.location.href="{% url 'user' name='Мама'%}">Мама</button>
+        <button onclick=window.location.href="{% url 'user' name='Папа'%}">Папа</button>
+        <button onclick=window.location.href="{% url 'user' name='Сын'%}">Сын</button>
+        <button onclick=window.location.href="{% url 'user' name='Товары для всей семьи'%}">Товары для семьи</button>
 
     </div>
      <h2>Голосование за покупки</h2>

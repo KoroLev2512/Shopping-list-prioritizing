@@ -2,10 +2,7 @@ from django.urls import path, re_path, include
 from add_product import views
 
 product_patterns = [
-    path('mother', views.mother, kwargs={"name":"mother"}, name='mother'),
-    path('father', views.father, kwargs={"name":"father"}, name='father'),
-    path('son', views.son, kwargs={"name":"son"}, name='son'),
-    path('family', views.family, kwargs={"name":"family"}, name='family'),
+    path('<str:name>', views.user, name='user'),
     # re_path(r'^(family|семья)/$', views.family2, kwargs={"name":"family"}, name='fam'), # Через регулярку
 ]
 
