@@ -53,6 +53,16 @@
         button:focus {
             outline: none;
         }
+
+        /* #gggg {
+            display: inline;
+        } */
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -62,32 +72,12 @@
         <h1>Товары для всей семьи!</h1>
     {% endif %}
     <!-- <input type="text" id="itemInput" placeholder="Введите товар"> -->
-    {{ form }}
-    <button onclick="addItem()">Добавить товар</button>
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button id="gggg" type="submit">Добавить товар</button>
+    </form>
     <button onclick=window.location.href="{% url 'home' %}">Назад</button>
 
-    <script>
-        function addItem() {
-            const itemInput = document.getElementById('itemInput');
-            const item = itemInput.value;
-            if (item) {
-                // Создаём запись в формате "название_товара - мама"
-                const formattedItem = `${item} - Мама`;
-                // Добавляем товар в localStorage
-                const items = JSON.parse(localStorage.getItem('cart')) || [];
-                items.push(formattedItem); // Используем отформатированное название товара
-                localStorage.setItem('cart', JSON.stringify(items));
-                itemInput.value = ''; // Очистить поле ввода
-                // Обновляем корзину на главной странице
-                updateCart();
-            }
-        }
-
-        function updateCart() {
-            const items = JSON.parse(localStorage.getItem('cart')) || [];
-            // Отправляем событие в localStorage для обновления корзины
-            localStorage.setItem('cart', JSON.stringify(items));
-        }
-    </script>
 </body>
 </html>

@@ -1,15 +1,16 @@
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponsePermanentRedirect, JsonResponse
-from django.shortcuts import render
-from .forms import UserForm
+from django.shortcuts import render, redirect
+from .forms import GoodForm
 import pandas as pd
 import numpy as np
 from add_product.models import GoodsModel, UsersModel
 
-df = pd.DataFrame()
-df['name'] = ['товар1', 'товар2','товар3','товар4','товар5']
-df['family'] = ['семья', 'семья', 'папа', 'мама', 'сын']
+# df = pd.DataFrame()
+# df['name'] = ['товар1', 'товар2','товар3','товар4','товар5']
+# df['family'] = ['семья', 'семья', 'папа', 'мама', 'сын']
 
 def home(request):
+    default_users()
     if request.method == 'POST':
         item = request.POST.get('item')
         item_name, item_user = item.split(' - ')
@@ -19,7 +20,7 @@ def home(request):
         except GoodsModel.DoesNotExist:
             return JsonResponse({'status': 'fail', 'message': 'Товар не найден'}, status=404)
 
-    userform = UserForm()
+    userform = GoodForm()
     data = {
         "form": userform,
         "users": [name['name'] for name in UsersModel.objects.values("name")],
@@ -27,11 +28,17 @@ def home(request):
         }
     return render(request, "home.html", context=data)
 
-
 def user(request, name):
-    userform = UserForm()
-    data = {"name": name, "users": ['Мама', 'Папа', 'Сын'], "form": userform}
+    if request.method == 'POST':
+        form = GoodForm(request.POST)
+        if form.is_valid():
+            good = form.save(commit=False)
+            good.user = UsersModel.objects.get(name=name)
+            good.save()
+    userform = GoodForm()
+    data = {"name": name, "users": ['Мама', 'Папа', 'Сын', ], "form": userform}
     return render(request, "user.html", context=data)
+
     # product = request.GET.get("product", "") # Параметр строки запроса
     # # http://127.0.0.1:8000/products/mother?product=good
     # # http://127.0.0.1:8000/products/mother?product=sugar
@@ -103,3 +110,10 @@ def to_matrix(request):
 
 def add_good(request):
     GoodsModel.objects.create(name="Яблоко", user=1)
+
+def default_users():
+    a = UsersModel.objects.all()
+    a.get_or_create(name='Мама')
+    a.get_or_create(name='Папа')
+    a.get_or_create(name='Сын')
+    a.get_or_create(name='Семья')
