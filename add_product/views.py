@@ -3,15 +3,29 @@ from django.shortcuts import render
 from .forms import UserForm
 import pandas as pd
 import numpy as np
+from add_product.models import GoodsModel, UsersModel
 
 df = pd.DataFrame()
 df['name'] = ['товар1', 'товар2','товар3','товар4','товар5']
 df['family'] = ['семья', 'семья', 'папа', 'мама', 'сын']
 
-def index(request):
+def home(request):
+    if request.method == 'POST':
+        item = request.POST.get('item')
+        item_name, item_user = item.split(' - ')
+        try:
+            item = GoodsModel.objects.get(name=item_name, user=UsersModel.objects.get(name=item_user))
+            item.delete()
+        except GoodsModel.DoesNotExist:
+            return JsonResponse({'status': 'fail', 'message': 'Товар не найден'}, status=404)
+
     userform = UserForm()
-    data = {"form": userform}
-    return render(request, "index.html", context=data)
+    data = {
+        "form": userform,
+        "users": [name['name'] for name in UsersModel.objects.values("name")],
+        "goods": [f"{name['name']} - {name['user__name']}" for name in GoodsModel.objects.values("name", "user__name")]
+        }
+    return render(request, "home.html", context=data)
 
 
 def user(request, name):
@@ -85,3 +99,6 @@ def to_matrix(request):
         return k_family
     df['koef'] = df.apply(label_koef, axis=1)
     return df['koef']
+
+def add_good(request):
+    GoodsModel.objects.create(name="Яблоко", user=1)

@@ -89,66 +89,40 @@
 <body>
     <h1>Выберите какой список покупок вы заполняете</h1>
     <div style="display: flex; justify-content: center;">
-        <button onclick=window.location.href="{% url 'user' name='Мама'%}">Мама</button>
-        <button onclick=window.location.href="{% url 'user' name='Папа'%}">Папа</button>
-        <button onclick=window.location.href="{% url 'user' name='Сын'%}">Сын</button>
-        <button onclick=window.location.href="{% url 'user' name='Товары для всей семьи'%}">Товары для семьи</button>
+    {% for user in users %}
+        <button onclick="window.location.href='{% url 'user' name=user %}'">{{ user }}</button>
+    {% endfor %}
 
     </div>
      <h2>Голосование за покупки</h2>
     <div style="display: flex; justify-content: center;">
-        <button onclick=window.location.href="{% url 'golos' name='Мама' %}">Мама</button>
-        <button onclick=window.location.href="{% url 'golos' name='Папа' %}">Папа</button>
-        <button onclick=window.location.href="{% url 'golos' name='Сын' %}">Сын</button>
-        
+        {% for user in users %}
+            {% if user != "Товары для семьи" %}
+                <button onclick="window.location.href='{% url 'golos' name=user %}'">{{ user }}</button>
+            {% endif %}
+        {% endfor %}
 
     </div>
     <h3>Вывести результат голосования</h3>
     <div style="display: flex; justify-content: center;">
-        <button onclick=window.location.href="{% url 'Result' %}">Результат</button>
+        <button onclick=window.location.href="{% url 'result' %}">Результат</button>
 
 
     </div>
     <div class="cart">
         <h2>Общая корзина</h2>
-        <!-- Тест базы -->
-        <p>{{Base.0}}</p> 
-        <ul id="cartList"></ul>
+        <ul>
+            {% for good in goods %}
+                <li>
+                    {{ good }}
+                    <form action="{% url 'home' %}" method="post" style="display: inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="item" value="{{ good }}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
-
-    <script>
-        const cartList = document.getElementById('cartList');
-
-        // Функция для отображения корзины
-        function updateCart() {
-            cartList.innerHTML = '';
-            const items = JSON.parse(localStorage.getItem('cart')) || [];
-            items.forEach((item, index) => {
-                const li = document.createElement('li');
-                li.textContent = item;
-
-                // Создаем кнопку для удаления товара
-                const deleteButton = document.createElement('button');
-                deleteButton.textContent = 'Удалить';
-                deleteButton.onclick = () => {
-                    removeItem(index);
-                };
-
-                li.appendChild(deleteButton);
-                cartList.appendChild(li);
-            });
-        }
-
-        // Функция для удаления товара
-        function removeItem(index) {
-            const items = JSON.parse(localStorage.getItem('cart')) || [];
-            items.splice(index, 1); // Удаляем элемент по индексу
-            localStorage.setItem('cart', JSON.stringify(items)); // Сохраняем обновленный массив
-            updateCart(); // Обновляем корзину
-        }
-
-        // Вызываем updateCart при загрузке страницы
-        updateCart();
-    </script>
 </body>
 </html>

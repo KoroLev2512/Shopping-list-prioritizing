@@ -2,7 +2,7 @@ from django.urls import path, re_path, include
 from add_product import views
 
 product_patterns = [
-    path('<str:name>', views.user, name='user'),
+    path('<str:name>/', views.user, name='user'),
     # re_path(r'^(family|семья)/$', views.family2, kwargs={"name":"family"}, name='fam'), # Через регулярку
 ]
 
@@ -12,8 +12,8 @@ voting_patterns = [
 ]
 
 urlpatterns = [
-    path('', views.index, name='Home'), # Главная страница
-    path('result', views.result, name='Result'), # Главная страница
+    path('', views.home, name='home'), # Главная страница
+    path('result', views.result, name='result'), # Результат матрицы
     path("products/", include(product_patterns)), # Все связанное с заполнением товара
     path("voting/", include(voting_patterns)), # Все связанное с голосованием
 ]
