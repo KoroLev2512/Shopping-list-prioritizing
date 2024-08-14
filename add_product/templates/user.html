@@ -64,6 +64,11 @@
     <input type="text" id="itemInput" placeholder="Введите товар">
     <button onclick="addItem()">Добавить товар</button>
     <button onclick=window.location.href="{% url 'home' %}">Назад</button>
+    <form action="{% url 'delete_user' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ name }}">
+        <button type="submit" style="background-color: rgb(153, 49, 49); color: white;">Удалить пользователя</button>
+    </form>
 
     <script>
         function addItem() {

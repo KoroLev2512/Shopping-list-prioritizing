@@ -3,6 +3,8 @@ from add_product import views
 
 product_patterns = [
     path('<str:name>/', views.user, name='user'),
+    path('add_user', views.add_user, name='add_user'),
+    path('delete_user', views.delete_user, name='delete_user')
     # re_path(r'^(family|семья)/$', views.family2, kwargs={"name":"family"}, name='fam'), # Через регулярку
 ]
 
