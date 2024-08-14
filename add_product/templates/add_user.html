@@ -53,36 +53,31 @@
         button:focus {
             outline: none;
         }
-
-        /* #gggg {
-            display: inline;
-        } */
-        form {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
     </style>
 </head>
-<body>
-    {% if name in users%}
-        <h1>Добро пожаловать, {{ name }}!</h1>
-    {% else %}
-        <h1>Товары для всей семьи!</h1>
-    {% endif %}
-    <!-- <input type="text" id="itemInput" placeholder="Введите товар"> -->
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button id="gggg" type="submit">Добавить товар</button>
-    </form>
-    <button onclick=window.location.href="{% url 'home' %}">Назад</button>
-    <form action="{% url 'delete_user' %}" method="post">
-        {% csrf_token %}
-        <input type="hidden" name="username" value="{{ name }}">
-        <button type="submit" style="background-color: rgb(153, 49, 49); color: white;">Удалить пользователя</button>
-    </form>
 
+<body>
+    <h1>Добавить пользователя</h1>
+    
+    <form method="post" action="{% url 'add_user' %}">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Введите имя пользователя"><br>
+        <button type="submit">Добавить пользователя</button>
+    </form>
+    <button onclick="window.location.href='{% url 'home' %}'" >Назад</button>
+
+    <h2>Существующие пользователи</h2>
+    <div style="display: flex; justify-content: center;">
+        {% for user in users %}
+            {% if user != "Товары для семьи" %}
+            <button onclick="window.location.href='{% url 'user' name=user %}'" style="background-color: #7700ff; color: white;">{{ user }}</button>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+</body>
+</html>
+</body>
+</html>
 </body>
 </html>

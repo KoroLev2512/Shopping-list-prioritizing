@@ -108,8 +108,21 @@ def to_matrix(request):
     df['koef'] = df.apply(label_koef, axis=1)
     return df['koef']
 
-def add_good(request):
-    GoodsModel.objects.create(name="Яблоко", user=1)
+def add_user(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        if username and not UsersModel.objects.filter(name=username).exists():
+            UsersModel.objects.create(name=username)
+    data = {
+        "users": [name['name'] for name in UsersModel.objects.values("name")],
+    }
+    return render(request, "add_user.html", data)
+
+def delete_user(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        UsersModel.objects.get(name=username).delete()
+    return redirect('home')
 
 def default_users():
     a = UsersModel.objects.all()
