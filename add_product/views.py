@@ -29,7 +29,8 @@ def home(request):
 
 
 def user(request, name):
-    data = {"name": name, "users": ['Мама', 'Папа', 'Сын']}
+    userform = UserForm()
+    data = {"name": name, "users": ['Мама', 'Папа', 'Сын'], "form": userform}
     return render(request, "user.html", context=data)
     # product = request.GET.get("product", "") # Параметр строки запроса
     # # http://127.0.0.1:8000/products/mother?product=good

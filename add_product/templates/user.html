@@ -61,7 +61,8 @@
     {% else %}
         <h1>Товары для всей семьи!</h1>
     {% endif %}
-    <input type="text" id="itemInput" placeholder="Введите товар">
+    <!-- <input type="text" id="itemInput" placeholder="Введите товар"> -->
+    {{ form }}
     <button onclick="addItem()">Добавить товар</button>
     <button onclick=window.location.href="{% url 'home' %}">Назад</button>
 
