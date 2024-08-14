@@ -92,6 +92,7 @@
     {% for user in users %}
         <button onclick="window.location.href='{% url 'user' name=user %}'">{{ user }}</button>
     {% endfor %}
+    <button style="background-color: #9fa1a0; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;" onclick=window.location.href='{% url "add_user" %}'>+</button>
 
     </div>
      <h2>Голосование за покупки</h2>
