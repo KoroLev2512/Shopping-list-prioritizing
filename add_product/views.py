@@ -31,7 +31,8 @@ def home(request):
 def user(request, name):
     if request.method == 'POST':
         form = GoodForm(request.POST)
-        if form.is_valid():
+        good = form.save(commit=False)
+        if form.is_valid() and not GoodsModel.objects.filter(name=good.name).exists():
             good = form.save(commit=False)
             good.user = UsersModel.objects.get(name=name)
             good.save()
