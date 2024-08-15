@@ -36,7 +36,11 @@ def user(request, name):
             good.user = UsersModel.objects.get(name=name)
             good.save()
     userform = GoodForm()
-    data = {"name": name, "users": ['Мама', 'Папа', 'Сын', ], "form": userform}
+    data = {"name": name, 
+            "users": ['Мама', 'Папа', 'Сын', ], 
+            "form": userform,
+            "goods": [good["name"] for good in GoodsModel.objects.filter(user__name=name).values("name")],
+    }
     return render(request, "user.html", context=data)
 
     # product = request.GET.get("product", "") # Параметр строки запроса
