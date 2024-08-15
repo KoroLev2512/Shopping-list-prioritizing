@@ -10,7 +10,7 @@ from add_product.models.users import VoteStatuses
 from ..forms import GoodForm
 
 
-def update_matrix(pair):
+def update_matrix(pair, result):
     if not pair:
         return False
     good1 = GoodsModel.objects.filter(id=pair.good1_id).first()
@@ -19,11 +19,11 @@ def update_matrix(pair):
     if good1 and good2:
 
         matrix1, created1 = MatrixModel.objects.get_or_create(
-            x_coord=good1, y_coord=good2
+            x_coordinate=good1, y_coordinate=good2
         )
 
         matrix2, created2 = MatrixModel.objects.get_or_create(
-            x_coord=good2, y_coord=good1
+            x_coordinate=good2, y_coordinate=good1
         )
 
         if result == '1':
@@ -33,6 +33,9 @@ def update_matrix(pair):
         
         matrix1.save()
         matrix2.save()
+
+        return True
+    return False
 
 
 def voting(request, name):
@@ -48,8 +51,7 @@ def voting(request, name):
         if result is not None:
             pair = PairModel.objects.filter(id=user.last_vote_pair).first()
             
-            if update_matrix(pair):
-                
+            if update_matrix(pair, result):
             # Increase last_vote_pair
                 user.last_vote_pair += 1
                 

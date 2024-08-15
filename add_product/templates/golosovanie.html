@@ -66,6 +66,8 @@
             margin: 5px;
             transition: background-color 0.3s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            display: flex;
+            margin-inline: auto;
         }
 
         button:hover {
@@ -81,15 +83,33 @@
 <body>
     <div class="container">
         <h1>Добро пожаловать, {{ name }}!</h1>
+        {% if item %}
         <h1>Голосование за товары</h1>
+        <form action="{% url 'voting' name %}" method="post">
+            {% csrf_token %}
         <div class="item">
             <h2 id="item1">Товар 1: {{ item1 }}</h2>
+            <input type="hidden" name="result" value="1">
             <button onclick="vote('item1')">Голосовать за Товар 1</button>
         </div>
+        </form >
+        <form action="{% url 'voting' name %}" method="post">
+            {% csrf_token %}
         <div class="item">
             <h2 id="item2">Товар 2: {{ item2 }}</h2>
+            <input type="hidden" name="result" value="0">
             <button onclick="vote('item2')">Голосовать за Товар 2</button>
+        {% else %}
+        <div class="container">
+            <h1>Добро пожаловать, {{ name }}!</h1>
+            <h1>Нет доступных товаров для голосования.</h1>
         </div>
+    {% endif %}
+        </div>
+        </form >
+
+
+    </form>
     </div>
 
     <script>
