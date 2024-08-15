@@ -69,7 +69,7 @@
     <h2>Существующие пользователи</h2>
     <div style="display: flex; justify-content: center;">
         {% for user in users %}
-            {% if user != "Товары для семьи" %}
+            {% if user != "Семья" %}
             <button onclick="window.location.href='{% url 'user' name=user %}'" style="background-color: #7700ff; color: white;">{{ user }}</button>
             {% endif %}
         {% endfor %}

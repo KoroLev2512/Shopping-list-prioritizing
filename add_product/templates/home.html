@@ -98,7 +98,7 @@
      <h2>Голосование за покупки</h2>
     <div style="display: flex; justify-content: center;">
         {% for user in users %}
-            {% if user != "Товары для семьи" %}
+            {% if user != "Семья" %}
                 <button onclick=window.location.href="{% url 'golos' name=user %}">{{ user }}</button>
             {% endif %}
         {% endfor %}
