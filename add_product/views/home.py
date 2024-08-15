@@ -8,13 +8,16 @@ from add_product.models import GoodsModel, UsersModel
 def home(request):
     default_users()
     if request.method == 'POST':
-        item = request.POST.get('item')
-        item_name, item_user = item.split(' - ')
-        try:
-            item = GoodsModel.objects.get(name=item_name, user=UsersModel.objects.get(name=item_user))
-            item.delete()
-        except GoodsModel.DoesNotExist:
-            return JsonResponse({'status': 'fail', 'message': 'Товар не найден'}, status=404)
+        if request.POST.get('empty_cart'):
+            GoodsModel.objects.all().delete()
+        else:
+            item = request.POST.get('item')
+            item_name, item_user = item.split(' - ')
+            try:
+                item = GoodsModel.objects.get(name=item_name, user=UsersModel.objects.get(name=item_user))
+                item.delete()
+            except GoodsModel.DoesNotExist:
+                return JsonResponse({'status': 'fail', 'message': 'Товар не найден'}, status=404)
 
     userform = GoodForm()
     data = {

@@ -20,7 +20,9 @@
             color: #333;
             text-align: center;
         }
-
+        form {
+        direction: rtl;
+        }
         button {
             background-color: #7700ff; 
             color: white;
@@ -83,6 +85,7 @@
         li button:hover {
             background-color: #e53935;
         }
+
     </style>
     <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
@@ -111,6 +114,11 @@
 
     </div>
     <div class="cart">
+              <form action="{% url 'home' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="empty_cart" value="true">
+        <button type="submit">Очистить корзину</button>
+    </form>
         <h2>Общая корзина</h2>
         <ul>
             {% for good in goods %}
