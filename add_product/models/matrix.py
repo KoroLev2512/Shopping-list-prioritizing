@@ -15,4 +15,4 @@ class MatrixModel(models.Model):
         related_name='y_matrices',
         verbose_name='Второй товар'
     )
-    value = models.IntegerField(verbose_name="Результат голосования")
+    value = models.IntegerField(verbose_name="Результат голосования", default=0)

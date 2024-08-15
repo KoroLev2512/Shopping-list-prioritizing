@@ -80,21 +80,15 @@
 </head>
 <body>
     <div class="container">
-        <h1>Голосование за товары</h1>
         <h1>Добро пожаловать, {{ name }}!</h1>
+        <h1>Голосование за товары</h1>
         <div class="item">
-            <h2 id="item1">Товар 1: Ноутбук</h2>
+            <h2 id="item1">Товар 1: {{ item1 }}</h2>
             <button onclick="vote('item1')">Голосовать за Товар 1</button>
         </div>
         <div class="item">
-            <h2 id="item2">Товар 2: Смартфон</h2>
+            <h2 id="item2">Товар 2: {{ item2 }}</h2>
             <button onclick="vote('item2')">Голосовать за Товар 2</button>
-        </div>
-
-        <h2>Результаты голосования:</h2>
-        <div id="results">
-            <p id="resultItem1">Товар 1 (Ноутбук): 0 голосов</p>
-            <p id="resultItem2">Товар 2 (Смартфон): 0 голосов</p>
         </div>
     </div>
 

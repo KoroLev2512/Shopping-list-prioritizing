@@ -9,7 +9,6 @@ product_patterns = [
 ]
 
 voting_patterns = [
-    # path('', views.voting),  # Маршрут по умолчанию
     path('<str:name>', views.voting, name='golos'),  # Через парметры маршрута
 ]
 
