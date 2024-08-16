@@ -1,22 +1,23 @@
 from add_product.models import GoodsModel, MatrixModel, UsersModel
+from add_product.models.users import VoteStatuses
 from django.db.models import Case, When, Count, Sum
 from django.shortcuts import redirect, render
 import pandas as pd
 
 
-def result():
-    if GoodsModel.objects.all().first().priority == 0:
-        update_priorities()
-    
-
-
-
-
 def result(request):
-    return render(request, "result.html")
+    goods = GoodsModel.objects.all().order_by('priority')
+    
+    if all(user.vote_status == VoteStatuses.VOTED for user in UsersModel.objects.all()):
+        if GoodsModel.objects.all().first().priority == 0:
+            update_priorities()
 
+        data = {'goods_priorities': [(i+1, good.name, good.priority) for i, good in enumerate(goods)]}
+    else:
+        not_voted_users = [user.username for user in UsersModel.objects.all() if user.vote_status != VoteStatuses.VOTED]
+        data = {'not_voted_users': not_voted_users}
 
-
+    return render(request, 'result.html', data)
 
 
 def update_priorities():
