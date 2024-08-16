@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +14,7 @@
         }
         h1 {
             text-align: center;
-            color: #333;
+            color: #000000;
         }
         .table-container {
             max-width: 800px;
@@ -31,6 +32,8 @@
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            border: 1px solid black;
+
         }
         th {
             background-color: #0077cc;
@@ -46,11 +49,12 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #3498db;
+            background-color: #7700ff;
             color: white;
             font-size: 16px;
             cursor: pointer;
-            margin-left: 1060px;
+            margin-top: 20px;
+            margin-left: 900px;
             transition: background-color 0.3s;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
@@ -62,47 +66,92 @@
         button:focus {
             outline: none;
         }
-        table {
-            width: 100%;
-           border-collapse: collapse;
+         .cont {
+            width: 80%;
+            max-width: 1000px;
+            margin: auto;
+            padding: 20px;
         }
-        th, td {
-             border: 1px solid white; /* Белая граница для разделительных линий */
-             padding: 8px;
-             text-align: left;
-         }
 
-        th {
-            background-color: #181818;
-         }
+        .hed {
+            background: #7700ff;
+            color: #edf2f7;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .hed h1 {
+            margin: 0;
+            font-size: 22px;
+            color: white;
+        }
+
+        .main-content {
+            margin-top: 20px;
+        }
+
+        .user-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .user-item {
+            background: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 18px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
     </style>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
-    <h1>Список товаров</h1>
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>№</th>
-                    <th>Наименование товара</th>
-                    <th>Приоритет товара</th>
-                </tr>
-            </thead>
-            <tbody>
+    {% if not_voted_users%}
+    <div class="cont">
+        <header class="hed">
+            <h1>Пользователи, которые не проголосовали:</h1>
+        </header>
+        <main class="main-content">
+            <ul class="user-list">
+                    {% for user in not_voted_users %}
+                    <li class="user-item"> {{ user }}</li>
+        {% endfor %}
+            </ul>
+        </main>
 
-                {% for num, name, priority in goods_priorities %}
 
-                <tr>
-                    <td>{{ num }}</td>
-                    <td>{{ name }}</td>
-                    <td>{{ priority }}</td>
-                </tr>
+    {% else %}
+        <h1>Список товаров</h1>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Наименование товара</th>
+                        <th>Приоритет товара</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                {% endfor %}
+                    {% for num, name, priority in goods_priorities %}
 
-            </tbody>
-        </table>
-    </div>
+                    <tr>
+                        <td>{{ num }}</td>
+                        <td>{{ name }}</td>
+                        <td>{{ priority }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+    {% endif %}
 
   <button onclick=window.location.href="{% url 'home' %}">Назад</button>
 </body>

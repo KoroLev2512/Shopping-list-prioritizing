@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Страница не найдена</title>
+        <style>
+            body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: rgb(238, 226, 252);
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.error-message {
+    z-index: 10;
+}
+
+.error-code {
+    font-size: 120px;
+    font-weight: bold;
+    margin: 0;
+    color: black;
+}
+
+.error-text {
+    font-size: 24px;
+    margin: 0;
+    color: black;
+}
+
+.home-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #7700ff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.home-button:hover {
+    background-color: #21a1f1;
+}
+
+.animation {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    background-color: #61dafb;
+    border-radius: 50%;
+    margin: 0 10px;
+    animation: bounce 1.5s infinite;
+}
+
+.circle:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.circle:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+}
+
+            </style>
+</head>
+<body>
+    <div class="container">
+        <div class="error-message">
+            <div class="error-code">404</div>
+            <div class="error-text">Страница не найдена</div>
+            <a href="/" class="home-button">На главную</a>
+        </div>
+        <div class="animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

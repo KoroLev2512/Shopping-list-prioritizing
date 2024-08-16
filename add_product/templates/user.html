@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -37,7 +38,7 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #3498db;
+            background-color: #7700ff;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -102,10 +103,11 @@
         }
 
         li button:hover {
-            background-color: #e53935;
+            background-color: #7700ff;
         }
         
     </style>
+        <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
 <body>
     {% if name in users%}
@@ -118,6 +120,7 @@
         {% csrf_token %}
         {{ form }}
         <button id="gggg" type="submit">Добавить товар</button>
+
     </form>
     <button onclick=window.location.href="{% url 'home' %}">Назад</button>
     <form action="{% url 'delete_user' %}" method="post">

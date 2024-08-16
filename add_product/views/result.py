@@ -3,19 +3,23 @@ from add_product.models.users import VoteStatuses
 from django.db.models import Case, When, Count, Sum
 from django.shortcuts import redirect, render
 import pandas as pd
+from django.db.models import Q
 
 
 def result(request):
     goods = GoodsModel.objects.all().order_by('priority')
     
-    if all(user.vote_status == VoteStatuses.VOTED for user in UsersModel.objects.all()):
+    if all(user.vote_status == VoteStatuses.VOTED.value for user in UsersModel.objects.all() if user.name != 'Семья'):
         if GoodsModel.objects.all().first().priority == 0:
             update_priorities()
 
         data = {'goods_priorities': [(i+1, good.name, good.priority) for i, good in enumerate(goods)]}
     else:
-        not_voted_users = [user.username for user in UsersModel.objects.all() if user.vote_status != VoteStatuses.VOTED]
-        data = {'not_voted_users': not_voted_users}
+        data = {
+            'not_voted_users': UsersModel.objects.exclude(
+                Q(vote_status=VoteStatuses.VOTED.value) | Q(name="Семья")
+            ).values_list('name', flat=True)
+        }
 
     return render(request, 'result.html', data)
 
@@ -37,7 +41,7 @@ def update_priorities():
 
     df = pd.DataFrame.from_dict(goods_data, orient='index')
 
-    df['rank'] = df['norm'].rank(method='average')
+    df['rank'] = df['norm'].rank(method='average', ascending=False)
     
     for item, values in df.to_dict(orient='index').items():
         GoodsModel.objects.filter(name=item).update(priority=int(values['rank']))

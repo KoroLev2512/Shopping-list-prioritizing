@@ -24,7 +24,7 @@
         direction: rtl;
         }
         button {
-            background-color: #7700ff; 
+            background-color: #7700ff;
             color: white;
             border: none;
             border-radius: 5px;
@@ -39,6 +39,7 @@
             background-color: #430fd3;
             transform: scale(1.05);
         }
+
 
         .cart {
             margin-top: 20px;
@@ -83,7 +84,11 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-
+button.disabled {
+        background-color: #ccc;
+        color: #666;
+        cursor: not-allowed;
+    }
         li button:hover {
             background-color: #e53935;
         }
@@ -93,22 +98,30 @@
 </head>
 <body>
     <h1>Выберите какой список покупок вы заполняете</h1>
-    <div style="display: flex; justify-content: center;">
-    {% for user in users %}
-        <button onclick=window.location.href="{% url 'user' name=user %}">{{ user }}</button>
+    <div style="display: flex; justify-content: center;flex-wrap: wrap;gap: 1px;align-items: center;">
+    {% for id, user in users %}
+        <button onclick=window.location.href="{% url 'user' user_id=id %}">{{ user }}</button>
     {% endfor %}
     <button style="background-color: #9fa1a0; color: #fff; border: none; padding: 10px 20px; font-size: 16px; cursor: pointer;" onclick=window.location.href='{% url "add_user" %}'>+</button>
 
     </div>
      <h2>Голосование за покупки</h2>
-    <div style="display: flex; justify-content: center;">
-        {% for user in users %}
+    <div style="display: flex; justify-content: center;flex-wrap: wrap;gap: 1px;align-items: center;">
+        {% for id, user in users %}
             {% if user != "Семья" %}
-                <button onclick=window.location.href="{% url 'voting' name=user %}">{{ user }}</button>
+                {% if user in not_voted_users %}
+                    <button onclick=window.location.href="{% url 'voting' user_id=id %}">{{ user }}</button>
+
+                {% else %}
+    <button onclick='' style="{% if user != 'Семья' %}background-color: #ccc; color: #666; cursor: not-allowed{% endif %}">{{ user }}</button>
+
+ {% endif %}
             {% endif %}
         {% endfor %}
 
     </div>
+
+
     <h3>Вывести результат голосования</h3>
     <div style="display: flex; justify-content: center;">
         <button onclick=window.location.href="{% url 'result' %}">Результат</button>
@@ -121,7 +134,7 @@
         <form action="{% url 'home' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="empty_cart" value="true">
-        <button type="submit">Очистить корзину</button>
+        <button type="submit" style="background-color: #f44336; margin-bottom: 100px;">Очистить корзину</button>
     </form>
         <ul>
             {% for good in goods %}

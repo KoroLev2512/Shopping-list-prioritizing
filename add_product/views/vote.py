@@ -8,11 +8,15 @@ from add_product.models.users import VoteStatuses
 from ..forms import GoodForm
 
 
-def voting(request, name):
+def voting(request, user_id):
     if not PairModel.objects.all():
         create_all_pairs()
-    data = {"name": name}
-    user = UsersModel.objects.filter(name=name).first()
+    if not UsersModel.objects.filter(pk=user_id).exists():
+        return redirect('404notfound')
+    user = UsersModel.objects.filter(pk=user_id).first()
+    if not user:
+        redirect('404notfound')
+    data = {"name": user.name, "user_id": user_id}
     if user.vote_status == VoteStatuses.VOTED.value:
         return render(request, "golosovanie.html", context=data)
 

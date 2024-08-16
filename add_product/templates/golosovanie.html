@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +15,7 @@
         }
         h1 {
             text-align: center;
-            color: #0077cc;
+            color: black;
         }
         h3 {
             text-align: center;
@@ -63,7 +64,7 @@
             padding: 10px 20px;
             border: none;
             border-radius: 5px;
-            background-color: #3498db;
+            background-color: #7700ff;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -83,13 +84,14 @@
         }
 
     </style>
+        <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
 <body>
     <div class="container">
         <h1>Добро пожаловать, {{ name }}!</h1>
         {% if item1 and item2 %}
     <h1>Голосование за товары</h1>
-    <form action="{% url 'voting' name %}" method="post">
+    <form action="{% url 'voting' user_id %}" method="post">
         {% csrf_token %}
         <div class="item">
             <h2 id="item1">Товар 1: {{ item1 }}</h2>
@@ -97,7 +99,7 @@
             <button onclick="vote('item1')">Голосовать за Товар 1</button>
         </div>
     </form>
-    <form action="{% url 'voting' name %}" method="post">
+    <form action="{% url 'voting' user_id %}" method="post">
         {% csrf_token %}
         <div class="item">
             <h2 id="item2">Товар 2: {{ item2 }}</h2>

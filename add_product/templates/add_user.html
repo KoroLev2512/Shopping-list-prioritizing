@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -39,7 +40,7 @@
             padding: 10px 40px;
             border: none;
             border-radius: 5px;
-            background-color: #3498db;
+            background-color: #7700ff;
             color: white;
             font-size: 16px;
             cursor: pointer;
@@ -50,13 +51,14 @@
         }
 
         button:hover {
-            background-color: #2980b9;
+            background-color: #7700ff;
         }
 
         button:focus {
             outline: none;
         }
     </style>
+        <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
 
 <body>
@@ -67,14 +69,16 @@
         <input type="text" name="username" placeholder="Введите имя пользователя"><br>
         <button type="submit">Добавить пользователя</button>
     </form>
+    <form method="post" action="{% url 'add_user' %}">
+        {% csrf_token %}
+    <button type="submit" name="username" value="Семья">Добавить общую корзину</button>
+     </form>
     <button onclick="window.location.href='{% url 'home' %}'" >Назад</button>
 
     <h2>Существующие пользователи</h2>
-    <div style="display: flex; justify-content: center;">
-        {% for user in users %}
-            {% if user != "Семья" %}
-            <button onclick="window.location.href='{% url 'user' name=user %}'" style="background-color: #7700ff; color: white;">{{ user }}</button>
-            {% endif %}
+    <div style="display: flex; justify-content: center;flex-wrap: wrap;gap:1px;align-items: center;">
+        {% for id, name in users %}
+            <button onclick="window.location.href='{% url 'user' user_id=id %}'" style="background-color: #7700ff; color: white;">{{ name }}</button>
         {% endfor %}
     </div>
 
