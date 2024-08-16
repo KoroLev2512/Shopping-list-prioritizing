@@ -1,4 +1,4 @@
-from django.urls import path, re_path, include
+from django.urls import path, include
 from add_product import views
 
 product_patterns = [

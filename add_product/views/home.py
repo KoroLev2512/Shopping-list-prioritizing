@@ -6,7 +6,6 @@ from add_product.models import GoodsModel, UsersModel
 
 
 def home(request):
-    default_users()
     if request.method == 'POST':
         if request.POST.get('empty_cart'):
             GoodsModel.objects.all().delete()
@@ -26,11 +25,3 @@ def home(request):
         "goods": [f"{name['name']} - {name['user__name']}" for name in GoodsModel.objects.values("name", "user__name")]
         }
     return render(request, "home.html", context=data)
-
-
-def default_users():
-    a = UsersModel.objects.all()
-    a.get_or_create(name='Мама')
-    a.get_or_create(name='Папа')
-    a.get_or_create(name='Сын')
-    a.get_or_create(name='Семья')

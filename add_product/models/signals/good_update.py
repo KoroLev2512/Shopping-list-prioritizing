@@ -23,3 +23,9 @@ def clear_pairs(sender, instance, **kwargs):
 @receiver(post_delete, sender=GoodsModel)
 def clear_matrix(sender, instance, **kwargs):
     MatrixModel.objects.all().delete()
+
+
+@receiver(post_save, sender=GoodsModel)
+@receiver(post_delete, sender=GoodsModel)
+def update_priority(sender, instance, **kwargs):
+    GoodsModel.objects.update(priority=0)

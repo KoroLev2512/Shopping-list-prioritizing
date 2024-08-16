@@ -16,6 +16,10 @@
             text-align: center;
             color: #0077cc;
         }
+        h3 {
+            text-align: center;
+            color: red;
+        }
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -83,28 +87,27 @@
 <body>
     <div class="container">
         <h1>Добро пожаловать, {{ name }}!</h1>
-        {% if item %}
-        <h1>Голосование за товары</h1>
-        <form action="{% url 'voting' name %}" method="post">
-            {% csrf_token %}
+        {% if item1 and item2 %}
+    <h1>Голосование за товары</h1>
+    <form action="{% url 'voting' name %}" method="post">
+        {% csrf_token %}
         <div class="item">
             <h2 id="item1">Товар 1: {{ item1 }}</h2>
             <input type="hidden" name="result" value="1">
             <button onclick="vote('item1')">Голосовать за Товар 1</button>
         </div>
-        </form >
-        <form action="{% url 'voting' name %}" method="post">
-            {% csrf_token %}
+    </form>
+    <form action="{% url 'voting' name %}" method="post">
+        {% csrf_token %}
         <div class="item">
             <h2 id="item2">Товар 2: {{ item2 }}</h2>
             <input type="hidden" name="result" value="0">
             <button onclick="vote('item2')">Голосовать за Товар 2</button>
-        {% else %}
-        <div class="container">
-            <h1>Добро пожаловать, {{ name }}!</h1>
-            <h1>Нет доступных товаров для голосования.</h1>
         </div>
-    {% endif %}
+    </form>
+{% else %}
+        <h3>Нет доступных товаров для голосования.</h3>
+{% endif %}
         </div>
         </form >
 

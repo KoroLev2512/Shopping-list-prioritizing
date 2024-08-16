@@ -9,5 +9,6 @@ class AddProductConfig(AppConfig):
         from add_product.models.signals.good_update import (
             update_user_status, 
             clear_pairs, 
-            clear_matrix
+            clear_matrix,
+            update_priority
         )

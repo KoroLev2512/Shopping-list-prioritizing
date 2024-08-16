@@ -6,8 +6,7 @@ from add_product.models import GoodsModel, UsersModel
 def user(request, name):
     if request.method == 'POST':
         form = GoodForm(request.POST)
-        good = form.save(commit=False)
-        if form.is_valid() and not GoodsModel.objects.filter(name=good.name).exists():
+        if form.is_valid():
             good = form.save(commit=False)
             good.user = UsersModel.objects.get(name=name)
             good.save()
