@@ -134,7 +134,7 @@ button.disabled {
         <form action="{% url 'home' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="empty_cart" value="true">
-        <button type="submit" style="background-color: #f44336; margin-bottom: 100px;">Очистить корзину</button>
+        <button type="submit" style="background-color: #f44336;margin">Очистить корзину</button>
     </form>
         <ul>
             {% for good in goods %}

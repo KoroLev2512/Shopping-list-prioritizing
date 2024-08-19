@@ -110,7 +110,7 @@
         <link rel="stylesheet" href="{% static "css/style.css" %}" />
 </head>
 <body>
-    {% if name in users%}
+    {% if name != 'Семья'%}
         <h1>Добро пожаловать, {{ name }}!</h1>
     {% else %}
         <h1>Товары для всей семьи!</h1>
