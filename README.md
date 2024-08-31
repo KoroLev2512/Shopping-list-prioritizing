@@ -13,7 +13,11 @@ Git необходим для клонирования репозитория п
 Перейдите по следующему URL: [https://gitflic.ru/project/zov/product](https://gitflic.ru/project/zov/product). Вы можете либо скачать проект как архив, либо клонировать его с помощью команды:
 
 ```bash
-git clone https://gitflic.ru/project/zov/product.git
+git clone https://github.com/KoroLev2512/Shopping-list-prioritizing.git
+  ```
+or
+```bash
+git clone git@github.com:KoroLev2512/Shopping-list-prioritizing.git
   ```
 
 ## 3. Скачайте и установите Python 3.10
